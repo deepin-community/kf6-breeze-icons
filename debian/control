@@ -1,15 +1,71 @@
-Source: template-repository
-Section: unknown
+Source: kf6-breeze-icons
+Section: libs
 Priority: optional
-Maintainer: Tsic404 <liuheng@deepin.org>
-Build-Depends: debhelper (>= 11)
-Standards-Version: 4.1.3
-Homepage: https://github.com/deepin-community/template-repository
-#Vcs-Browser: https://salsa.debian.org/debian/deepin-community-template-repository
-#Vcs-Git: https://salsa.debian.org/debian/deepin-community-template-repository.git
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Aurélien COUDERC <coucouf@debian.org>,
+           Patrick Franz <deltaone@debian.org>,
+Build-Depends: cmake (>= 3.16~),
+               debhelper-compat (= 13),
+               dh-sequence-kf6,
+               dh-sequence-pkgkde-symbolshelper,
+               extra-cmake-modules (>= 6.6.0~),
+               fdupes,
+               libxkbcommon-dev,
+               libxml2-utils,
+               pkgconf,
+               python3-lxml,
+               qt6-base-dev (>= 6.5.0+dfsg~),
+Standards-Version: 4.7.0
+Homepage: https://invent.kde.org/frameworks/breeze-icons
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/kde/kf6-breeze-icons
+Vcs-Git: https://salsa.debian.org/qt-kde-team/kde/kf6-breeze-icons.git
+Rules-Requires-Root: no
 
-Package: template-repository
+Package: kf6-breeze-icon-theme
+Section: kde
+Architecture: all
+Multi-Arch: foreign
+Depends: hicolor-icon-theme, ${misc:Depends},
+Breaks: breeze-icon-theme (<< 4:5.115.0-3~),
+Replaces: breeze-icon-theme (<< 4:5.115.0-3~),
+Description: Default Plasma icon theme
+ This is the default icon theme for the KDE Plasma 6 desktop.
+ .
+ This package is part of the Breeze theme module.
+
+Package: kf6-breeze-icon-theme-rcc
+Section: kde
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+Breaks: breeze-icon-theme-rcc (<< 4:5.115.0-3~),
+Replaces: breeze-icon-theme-rcc (<< 4:5.115.0-3~),
+Description: RCC resources for the breeze icon theme
+ Breeze is the default icon theme for the KDE Plasma 6 desktop. This package
+ contains the icons in RCC format.
+ .
+ This package is part of the Breeze theme module.
+
+Package: libkf6breezeicons-dev
+Section: libdevel
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Depends: kf6-breeze-icon-theme-rcc,
+         libkf6breezeicons6 (= ${binary:Version}),
+         qt6-base-dev (>= 6.5.0+dfsg~),
+         ${misc:Depends},
+Description: Default Plasma icon theme (development files)
+ This is the default icon theme for the KDE Plasma 6 desktop.
+ .
+ This package is part of the Breeze theme module.
+ .
+ This package contains the development files.
+
+Package: libkf6breezeicons6
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends},
+Depends: ${misc:Depends}, ${shlibs:Depends},
+Description: Default Plasma icon theme
+ This is the default icon theme for the KDE Plasma 6 desktop.
+ .
+ This package is part of the Breeze theme module.
