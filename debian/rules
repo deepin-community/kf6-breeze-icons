@@ -1,4 +1,20 @@
 #!/usr/bin/make -f
 
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
 %:
-	dh $@
+	dh $@ --no-parallel
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DBINARY_ICONS_RESOURCE=ON -DWITH_ICON_GENERATION=ON -DICONS_LIBRARY=ON
+
+override_dh_auto_install:
+	dh_auto_install --destdir=debian/tmp
+
+override_dh_install:
+	dh_install --sourcedir=debian/kf6-breeze-icon-theme
+	if [ -d debian/kf6-breeze-icon-theme ]; then \
+		rm debian/kf6-breeze-icon-theme/usr/share/icons/*/*.rcc; \
+		find $(CURDIR)/debian/kf6-breeze-icon-theme -type d -print0 |xargs -0 rmdir --ignore-fail-on-non-empty; \
+		bash $(CURDIR)/debian/symlink_duplicates.sh $(CURDIR)/debian/kf6-breeze-icon-theme $(CURDIR)/debian/kf6-breeze-icon-theme/usr/share/icons; \
+	fi
